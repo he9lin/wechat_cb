@@ -1,7 +1,8 @@
 defmodule Peppa.Web do
   use Plug.Router
 
-  plug Plug.Parsers, parsers: [:urlencoded, :multipart]
+  plug Plug.Parsers, parsers: [:urlencoded, :multipart],
+                     pass: ["text/*"]
 
   plug :match
   plug :dispatch
