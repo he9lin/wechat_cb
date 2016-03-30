@@ -13,6 +13,6 @@ defmodule Peppa do
   end
 
   def start_web_site do
-    {:ok, _} = Plug.Adapters.Cowboy.http Peppa.Web, []
+    {:ok, _} = Plug.Adapters.Cowboy.http Peppa.Web, [], port: 5000
   end
 end

@@ -14,7 +14,7 @@ defmodule Peppa.Web do
   end
 
   post "/weixin_callback" do
-    payload = conn.params |> Dict.keys |> List.first |> @slack_service.send
+    conn.params |> Dict.keys |> List.first |> @slack_service.send
 
     conn
     |> send_resp(201, "success")
