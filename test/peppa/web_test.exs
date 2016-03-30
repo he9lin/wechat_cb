@@ -26,7 +26,7 @@ defmodule WebTest do
 
   test "/weixin_callback" do
     conn = conn(:post, "/weixin_callback", @weixin_cb_payload)
-           |> put_req_header("content-type", "application/x-www-form-urlencoded")
+           |> put_req_header("content-type", "text/plain")
            |> Web.call(@opts)
 
     assert conn.status == 201

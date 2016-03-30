@@ -1,8 +1,11 @@
 defmodule Peppa.Web do
   use Plug.Router
+  require Logger
 
-  plug Plug.Parsers, parsers: [:urlencoded, :multipart],
-                     pass: ["text/*"]
+  plug Plug.Logger
+  plug Plug.Parsers, parsers: [:urlencoded, :multipart, :json],
+                     pass: ["*/*"],
+                     json_decoder: Poison
 
   plug :match
   plug :dispatch
@@ -15,7 +18,13 @@ defmodule Peppa.Web do
   end
 
   post "/weixin_callback" do
-    conn.params |> Dict.keys |> List.first |> @slack_service.send
+    case conn |> Plug.Conn.read_body do
+      {:ok, payload, _} ->
+        @slack_service.send(payload)
+        Logger.info "Sent #{payload} to #{@slack_service}"
+      _ ->
+        Logger.error "Failed to parse body"
+    end
 
     conn
     |> send_resp(201, "success")
