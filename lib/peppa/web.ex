@@ -6,14 +6,16 @@ defmodule Peppa.Web do
   plug :match
   plug :dispatch
 
+  @slack_service Application.get_env(:peppa, :slack_service)
+
   get "/" do
     conn
     |> send_resp(200, "ok")
   end
 
   post "/weixin_callback" do
-    payload = conn.params |> Dict.keys |> List.first
-    IO.inspect payload
+    payload = conn.params |> Dict.keys |> List.first |> @slack_service.send
+
     conn
     |> send_resp(201, "success")
   end
