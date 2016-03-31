@@ -9,6 +9,6 @@ defmodule Peppa.SlackService do
 
   def send(payload) do
     Logger.info "Sending '#{payload}' to #{@slack_service_hook}."
-    HTTPoison.post(@slack_service_hook, %{"text": "Test"} |> Poison.encode!)
+    HTTPoison.post(@slack_service_hook, %{"text": payload} |> Poison.encode!)
   end
 end

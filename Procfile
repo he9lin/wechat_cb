@@ -1,1 +1,1 @@
-web: mix server
+web: iex -S mix
