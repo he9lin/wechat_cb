@@ -5,14 +5,14 @@ defmodule Peppa do
     import Supervisor.Spec, warn: false
 
     children = [
-      worker(__MODULE__, [], function: :start_web_site),
+      worker(__MODULE__, [], function: :run),
     ]
 
     opts = [strategy: :one_for_one, name: Peppa.Supervisor]
     Supervisor.start_link(children, opts)
   end
 
-  def start_web_site do
+  def run do
     {:ok, _} = Plug.Adapters.Cowboy.http Peppa.Web, [], port: 5000
   end
 end

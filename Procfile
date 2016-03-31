@@ -1,1 +1,1 @@
-web: iex -S mix
+web: mix run --no-halt
