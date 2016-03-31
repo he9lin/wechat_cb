@@ -21,7 +21,6 @@ defmodule Peppa.Web do
     case conn |> Plug.Conn.read_body do
       {:ok, payload, _} ->
         @slack_service.send(payload)
-        Logger.info "Sent #{payload} to #{@slack_service}"
       _ ->
         Logger.error "Failed to parse body"
     end
