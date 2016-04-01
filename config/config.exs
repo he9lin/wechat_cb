@@ -5,6 +5,9 @@ use Mix.Config
 config :peppa, slack_service_hook: System.get_env("SLACK_SERVICE_HOOK")
 config :peppa, slack_service: Peppa.SlackService
 
+config :peppa, wechat_decoder_url: System.get_env("WECHAT_DECODER_URL")
+config :peppa, wechat_decoder_service: Peppa.WechatDecoderService
+
 # This configuration is loaded before any dependency and is restricted
 # to this project. If another project depends on this project, this
 # file won't be loaded nor affect the parent project. For this reason,
