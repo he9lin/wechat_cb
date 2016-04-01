@@ -15,11 +15,11 @@ defmodule Peppa.WechatDecoderService do
 
     case HTTPoison.post(@wechat_decoder_url, payload_json, headers) do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
-        case %{"result": decoded_content} = Poison.decode!(body) do
-          decoded_content -> {:ok, decoded_content}
-          _ -> :error
+        case Poison.decode!(body) do
+          %{"result" => decoded_content} -> {:ok, decoded_content}
+          _ -> {:error, "Failed to decode #{body}" }
         end
-      _ -> :error
+      _ -> {:error, "Request to #{@wechat_decoder_url} failed"}
     end
   end
 end

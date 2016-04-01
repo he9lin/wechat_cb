@@ -22,8 +22,8 @@ defmodule Peppa.Web do
     case conn |> Plug.Conn.read_body do
       {:ok, payload, _} ->
         case payload |> @wechat_decoder_service.send do
-          {:ok, payload} -> @slack_service.send(payload)
-          _ -> Logger.error "Failed to decode payload"
+          {:ok, payload}   -> @slack_service.send(payload)
+          {:error, reason} -> Logger.error reason
         end
       _ ->
         Logger.error "Failed to parse body"
