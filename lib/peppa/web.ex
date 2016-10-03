@@ -18,6 +18,18 @@ defmodule Peppa.Web do
     |> send_resp(200, "ok")
   end
 
+  post "/:app_id/callback" do
+    case conn |> Plug.Conn.read_body do
+      {:ok, payload, _} ->
+        Logger.info "/#{app_id}/callback #{inspect payload}"
+      _ ->
+        Logger.error "Failed to parse body"
+    end
+
+    conn
+    |> send_resp(201, "success")
+  end
+
   post "/weixin_callback" do
     case conn |> Plug.Conn.read_body do
       {:ok, payload, _} ->

@@ -32,4 +32,13 @@ defmodule WebTest do
     assert conn.status == 201
     assert conn.resp_body == "success"
   end
+
+  test "/:app_id/callback" do
+    conn = conn(:post, "/wx12345/callback", @weixin_cb_payload)
+           |> put_req_header("content-type", "text/plain")
+           |> Web.call(@opts)
+
+    assert conn.status == 201
+    assert conn.resp_body == "success"
+  end
 end
