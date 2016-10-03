@@ -19,7 +19,12 @@ defmodule Peppa.WechatDecoderService do
           {:ok, %{"result" => decoded_content}} -> {:ok, decoded_content}
           _ -> {:error, "Failed to decode #{body}" }
         end
-      _ -> {:error, "Request to #{@wechat_decoder_url} failed"}
+      {:ok, %HTTPoison.Response{status_code: status_code}} ->
+        {:error, "Request to #{@wechat_decoder_url} failed with #{status_code}"}
+      {:error, %HTTPoison.Error{reason: reason}} ->
+        {:error, reason}
+      _ ->
+        {:error, "Request to #{@wechat_decoder_url} failed"}
     end
   end
 end
