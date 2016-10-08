@@ -1,4 +1,6 @@
 defmodule Peppa.WechatDecoderService do
+  require Logger
+
   alias WeWhisper.Whisper
 
   @appid            Application.get_env(:peppa, :wechat_appid)
@@ -10,6 +12,7 @@ defmodule Peppa.WechatDecoderService do
   end
 
   def decode(payload) do
+    Logger.info "decoding #{inspect payload}"
     whisper = Whisper.new @appid, @token, @encoding_aes_key
     case whisper |> Whisper.decrypt_message(payload) do
       {:ok, decoded_content} -> {:ok, decoded_content}
