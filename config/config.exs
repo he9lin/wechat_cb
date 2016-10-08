@@ -5,8 +5,9 @@ use Mix.Config
 config :peppa, slack_service_hook: System.get_env("SLACK_SERVICE_HOOK")
 config :peppa, slack_service: Peppa.SlackService
 
-config :peppa, wechat_decoder_url: System.get_env("WECHAT_DECODER_URL")
-config :peppa, wechat_decoder_service: Peppa.WechatDecoderService
+config :peppa, wechat_appid:            System.get_env("WECHAT_APPID")
+config :peppa, wechat_token:            System.get_env("WECHAT_TOKEN")
+config :peppa, wechat_encoding_aes_key: System.get_env("WECHAT_ENCODING_AES_KEY")
 
 # This configuration is loaded before any dependency and is restricted
 # to this project. If another project depends on this project, this

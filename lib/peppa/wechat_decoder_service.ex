@@ -1,30 +1,19 @@
 defmodule Peppa.WechatDecoderService do
-  require Logger
+  alias WeWhisper.Whisper
 
-  @wechat_decoder_url Application.get_env(:peppa, :wechat_decoder_url)
+  @appid            Application.get_env(:peppa, :wechat_appid)
+  @token            Application.get_env(:peppa, :wechat_token)
+  @encoding_aes_key Application.get_env(:peppa, :wechat_encoding_aes_key)
 
-  def send(nil) do
-    Logger.error "Payload is nil."
+  def decode(nil) do
+    {:error, "payload is nil"}
   end
 
-  def send(payload) do
-    payload_json = %{"content": payload} |> Poison.encode!
-    headers      = [{"Content-Type", "application/json;charset=UTF-8"}]
-
-    Logger.info "Sending '#{payload_json}' to #{@wechat_decoder_url}."
-
-    case HTTPoison.post(@wechat_decoder_url, payload_json, headers) do
-      {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
-        case Poison.decode(body) do
-          {:ok, %{"result" => decoded_content}} -> {:ok, decoded_content}
-          _ -> {:error, "Failed to decode #{body}" }
-        end
-      {:ok, %HTTPoison.Response{status_code: status_code}} ->
-        {:error, "Request to #{@wechat_decoder_url} failed with #{status_code}"}
-      {:error, %HTTPoison.Error{reason: reason}} ->
-        {:error, reason}
-      _ ->
-        {:error, "Request to #{@wechat_decoder_url} failed"}
+  def decode(payload) do
+    whisper = Whisper.new @appid, @token, @encoding_aes_key
+    case whisper |> Whisper.decrypt_message(payload) do
+      {:ok, decoded_content} -> {:ok, decoded_content}
+      {:error, %WeWhisper.Error{reason: reason}} -> {:error, reason}
     end
   end
 end

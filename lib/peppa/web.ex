@@ -11,7 +11,6 @@ defmodule Peppa.Web do
   plug :dispatch
 
   @slack_service          Application.get_env(:peppa, :slack_service)
-  @wechat_decoder_service Application.get_env(:peppa, :wechat_decoder_service)
 
   get "/" do
     conn
@@ -31,18 +30,18 @@ defmodule Peppa.Web do
   end
 
   post "/weixin_callback" do
-    case conn |> Plug.Conn.read_body do
-      {:ok, payload, _} ->
-        case payload |> @wechat_decoder_service.send do
-          {:ok, payload}   -> @slack_service.send(payload)
-          {:error, reason} -> Logger.error reason
-        end
-      _ ->
-        Logger.error "Failed to parse body"
-    end
+    result =
+      with {:ok, payload, _} <- Plug.Conn.read_body(conn),
+           {:ok, decoded}    <- Peppa.WechatDecoderService.decode(payload),
+           do: @slack_service.send(decoded)
 
-    conn
-    |> send_resp(201, "success")
+    case result do
+      {:error, reason} ->
+        Logger.error reason
+        conn |> send_resp(422, "failed to decode")
+      _ ->
+        conn |> send_resp(201, "success")
+    end
   end
 
   match _ do
