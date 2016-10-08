@@ -32,7 +32,7 @@ defmodule Peppa.Web do
   post "/weixin_callback" do
     result =
       with {:ok, payload, _} <- Plug.Conn.read_body(conn),
-           {:ok, decoded}    <- Peppa.WechatDecoderService.decode(payload),
+           {:ok, decoded}    <- Peppa.WechatDecoderService.decode(payload, conn.params),
            do: @slack_service.send(decoded)
 
     case result do

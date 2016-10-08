@@ -31,7 +31,7 @@ defmodule Peppa.Mixfile do
     [{:cowboy, "~> 1.0.0"},
      {:plug, "~> 1.0"},
      {:httpoison, "~> 0.8.0"},
-     {:we_whisper, "~> 0.1.1"},
+     {:we_whisper, "~> 0.1.2"},
      {:poison, "~> 2.0"}]
   end
 end

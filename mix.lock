@@ -11,4 +11,4 @@
   "ranch": {:hex, :ranch, "1.2.1", "a6fb992c10f2187b46ffd17ce398ddf8a54f691b81768f9ef5f461ea7e28c762", [:make], []},
   "secure_random": {:hex, :secure_random, "0.5.0", "f49e4bfe686f7a78f0dd16700552e4135f02c122ef6dff35544e4f754641f688", [:mix], []},
   "ssl_verify_fun": {:hex, :ssl_verify_fun, "1.1.0", "edee20847c42e379bf91261db474ffbe373f8acb56e9079acb6038d4e0bf414f", [:rebar, :make], []},
-  "we_whisper": {:hex, :we_whisper, "0.1.1", "6dbd8d3ca314df5fa24abcc5a94f7b304bfcac1ca63527d6c090b5ae653439c0", [:mix], [{:secure_random, "~> 0.5", [hex: :secure_random, optional: false]}]}}
+  "we_whisper": {:hex, :we_whisper, "0.1.2", "dd1a802b3f1be93046372a3a3670fc5adacd6188bcf9d0cabc6227ba880954d3", [:mix], [{:secure_random, "~> 0.5", [hex: :secure_random, optional: false]}]}}
