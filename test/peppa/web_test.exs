@@ -36,7 +36,9 @@ defmodule WebTest do
   end
 
   test "/:app_id/callback" do
-    conn = conn(:post, "/wx12345/callback", @weixin_cb_payload)
+    url = "/wx12345/callback?timestamp=#{@timestamp}&nonce=#{@nonce}&encrypt_type=aes&msg_signature=#{@msg_signature}"
+
+    conn = conn(:post, url, @weixin_cb_payload)
            |> put_req_header("content-type", "text/plain")
            |> Web.call(@opts)
 
