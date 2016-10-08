@@ -10,7 +10,7 @@ defmodule Peppa.Web do
   plug :match
   plug :dispatch
 
-  @slack_service          Application.get_env(:peppa, :slack_service)
+  @slack_service Application.get_env(:peppa, :slack_service)
 
   get "/" do
     conn
