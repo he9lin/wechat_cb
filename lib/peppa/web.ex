@@ -46,12 +46,15 @@ defmodule Peppa.Web do
            do: {:ok, key}
 
     case result do
-      {:error, reason} ->
-        Logger.error reason
-        conn |> send_resp(422, "failed to decode")
       {:ok, key} ->
         Logger.info "stored #{key}"
         conn |> send_resp(201, "success")
+      {:error, %WeWhisper.Error{reason: reason}} ->
+        Logger.error reason
+        conn |> send_resp(422, reason)
+      {:error, reason} ->
+        Logger.error reason
+        conn |> send_resp(422, inspect(reason))
     end
   end
 
