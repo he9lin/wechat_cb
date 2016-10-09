@@ -14,7 +14,7 @@ defmodule Peppa.Mixfile do
   #
   # Type "mix help compile.app" for more information
   def application do
-    [applications: [:cowboy, :logger, :plug, :httpoison],
+    [applications: [:cowboy, :logger, :plug, :httpoison, :redix],
      mod: {Peppa, []}]
   end
 
@@ -31,7 +31,8 @@ defmodule Peppa.Mixfile do
     [{:cowboy, "~> 1.0.0"},
      {:plug, "~> 1.0"},
      {:httpoison, "~> 0.8.0"},
-     {:we_whisper, "~> 0.1.2"},
-     {:poison, "~> 2.0"}]
+     {:we_whisper, "~> 0.1.3"},
+     {:poison, "~> 2.0"},
+     {:redix, "0.4.0"}]
   end
 end

@@ -6,6 +6,7 @@ defmodule Peppa do
 
     children = [
       worker(__MODULE__, [], function: :run),
+      worker(Redix, [[], [name: :redix]]),
     ]
 
     opts = [strategy: :one_for_one, name: Peppa.Supervisor]

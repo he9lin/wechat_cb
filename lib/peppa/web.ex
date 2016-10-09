@@ -1,6 +1,9 @@
 defmodule Peppa.Web do
   use Plug.Router
   require Logger
+  import Peppa.WechatDecoderService
+  import Peppa.Parser
+  import Peppa.Repo
 
   plug Plug.Logger
   plug Plug.Parsers, parsers: [:urlencoded, :multipart, :json],
@@ -22,7 +25,7 @@ defmodule Peppa.Web do
 
     result =
       with {:ok, payload, _} <- Plug.Conn.read_body(conn),
-           {:ok, decoded}    <- Peppa.WechatDecoderService.decode(payload, conn.params),
+           {:ok, decoded}    <- decode(payload, conn.params),
            do: @slack_service.send(decoded)
 
     case result do
@@ -37,14 +40,17 @@ defmodule Peppa.Web do
   post "/weixin_callback" do
     result =
       with {:ok, payload, _} <- Plug.Conn.read_body(conn),
-           {:ok, decoded}    <- Peppa.WechatDecoderService.decode(payload, conn.params),
-           do: @slack_service.send(decoded)
+           {:ok, decoded}    <- decode(payload, conn.params),
+           {:ok, ticket}     <- parse(Peppa.ComponentVerifyTicket, decoded),
+           {:ok, key}        <- insert(ticket, Peppa.RedisStore),
+           do: {:ok, key}
 
     case result do
       {:error, reason} ->
         Logger.error reason
         conn |> send_resp(422, "failed to decode")
-      _ ->
+      {:ok, key} ->
+        Logger.info "stored #{key}"
         conn |> send_resp(201, "success")
     end
   end
