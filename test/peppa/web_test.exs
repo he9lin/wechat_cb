@@ -18,7 +18,7 @@ defmodule WebTest do
 </xml>
   """
   @component_verify_ticket "ticket@@@QZJ7ZseLV0EjnW6TQahrdDf7sIKBY1IAWjl3Rzps6XMXc-XQRSygXs_AzR1D7o2seO08zL7LYka8IsGiYbhgDA"
-  @expected_key "we_whisper_test:component_verify_ticket:wx2c2769f8efd9abc2"
+  @expected_key "we_whisper_test:component_verify_ticket:wx2c2769f8efd9abc2:ticket"
 
   setup do
     Logger.disable(self())

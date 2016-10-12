@@ -3,7 +3,7 @@ defmodule Peppa.RepoTest do
   alias Peppa.Repo
 
   @component_verify_ticket "ticket@@@XDvE-9Ai2O7ZivDdsWQm2bJn-JjUMXYYF1CZHERUqEylechkn4jbAY0BspvQW9nVSBcTjTZtUQvz4tSy3yePZw"
-  @expected_key "we_whisper_test:component_verify_ticket:wx9bd52800ff14f997"
+  @expected_key "we_whisper_test:component_verify_ticket:wx9bd52800ff14f997:ticket"
 
   setup do
     on_exit fn ->
