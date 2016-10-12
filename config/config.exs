@@ -3,7 +3,7 @@
 use Mix.Config
 
 config :peppa, db_prefix: System.get_env("DB_PREFIX")
-config :peppa, redis_uri: System.get_env("REDIS_URI") || "redis://127.0.0.1:6379"
+config :peppa, redis_uri: System.get_env("REDIS_URL") || "redis://127.0.0.1:6379"
 
 config :peppa, slack_service_hook: System.get_env("SLACK_SERVICE_HOOK")
 config :peppa, slack_service: Peppa.SlackService
